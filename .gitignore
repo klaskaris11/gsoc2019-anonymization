@@ -17,3 +17,5 @@ anonymizer.egg-info/
 ## LibreOffice Extension
 
 libreoffice-extension/extras
+
+*.idea
