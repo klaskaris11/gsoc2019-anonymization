@@ -37,16 +37,23 @@ function goBack() {
 
 <button type='button' id='option2_button' name='option2' class='btn btn-secondary' onclick="select_preview_button_function(2)">Focus</button>
 
-{% comment %} Nabigation Buttons {% endcomment %}
+{% comment %} Navigation Buttons {% endcomment %}
 
 <button type='button' id='update_text_button' name='update_text_button' class='btn btn-primary' onclick='updateUserDictionary()'>Update User Dictionary </button>
+
+<button type='button' id='update_text_button' name='update_exclude_text_button' class='btn btn-info' onclick='updateExcludeUserDictionary()'>Update Exclude User Dictionary </button>
 
 <button type='button' id='update_text_button' name='update_text_button' class='btn btn-success' onclick='updateText()'>Update Text</button>
 
 <button type='button' id='anonymize_word_button' name='anonymize_word' class='btn btn-danger' onclick='addWordsToBeAnonymized()'>Anonymize word</button>
 
+<button type='button' id='exclude_word_button' name='exclude_word' class='btn btn-info' onclick='addWordsToBeExcluded()'>Exclude word</button>
+
 {% include 'button_delete_words.html' %}
-{% comment %} <button type='button' id='delete_words_button' name='delete_words' class='btn btn-warning' onclick='deleteWordsToBeAnonymized()'>Delete words</button> {% endcomment %}
+{% comment %}
+    <button type='button' id='delete_words_button' name='delete_words' class='btn btn-warning' onclick='deleteWordsToBeAnonymized()'>Delete words</button>
+    <button type='button' id='delete_excluded_words_button' name='delete_excluded_words' class='btn btn-warning' onclick='deleteWordsToBeExcluded()'>Delete excluded</button>
+{% endcomment %}
 
 
 

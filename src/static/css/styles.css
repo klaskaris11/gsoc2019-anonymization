@@ -112,9 +112,18 @@
   float: right;
     }
 
+#exclude_word_button{
+  float: right;
+    }
+
 #update_text_button{
   float: right;
 }
+
+#update_exclude_text_button{
+  float: right;
+}
+
 #delete_words_button{
   float: right;
   /* position: fixed */

@@ -7,6 +7,7 @@ def anonymize_file(id='',
                    user_folder='default',
                    files_folder='files',
                    custom_words='',
+                   exclude_words='',
                    text='',
                    download=False,
                    updateTextIfPossible=False,
@@ -24,6 +25,9 @@ def anonymize_file(id='',
     file_type = filename[-3:]
     if(custom_words[0] == ','):
         custom_words = custom_words[1:]
+
+    if(exclude_words[0] == ','):
+        exclude_words = exclude_words[1:]
 
     if file_type == 'odt':
 
@@ -53,6 +57,9 @@ def anonymize_file(id='',
             custom_words_option = (
                 " -w '" + custom_words + "'") if custom_words != '' else ''
 
+            exclude_words_option = (
+                " -x '" + exclude_words + "'") if exclude_words != '' else ''
+
             anonymized_file_name = tempname[0:(
                 len(tempname)-4)] + '_anonymized.txt'
             anonymized_file = os.path.join(os.path.dirname(__file__),
@@ -62,7 +69,7 @@ def anonymize_file(id='',
             if not os.path.isfile(anonymized_file) or updateTextIfPossible or rerender_text:
                 command = ('python3 -m anonymizer_service' +
                            ' -i upload_file/documents/' + user_folder + '/' + tempname +
-                           custom_words_option)
+                           custom_words_option + exclude_words_option)
                 runShell(command)
 
             with open(temp_file, mode='r') as f:
@@ -73,10 +80,14 @@ def anonymize_file(id='',
         else:
             custom_words_option = (
                 " -w '" + custom_words + "'") if custom_words != '' else ''
+
+            exclude_words_option = (
+                " -x '" + exclude_words + "'") if exclude_words != '' else ''
+
             command = ('python3 -m anonymizer_service' +
                        ' -i ' + file +
                        ' -o ' + 'upload_file/documents/' + user_folder + '/' + anonymized_document_name +
-                       custom_words_option)
+                       custom_words_option + exclude_words_option)
             runShell(command)
 
             anonymized_file_name = file_name[0:(
@@ -97,9 +108,11 @@ def anonymize_file(id='',
                                        'documents/' + user_folder + '/' + anonymized_file_name)
 
         # Check if file exists already or force update
+        exclude_words_option = (" -x '" + exclude_words + "'") if exclude_words != '' else ''
         if not os.path.isfile(anonymized_file) or updateTextIfPossible or rerender_text:
             command = ('python3 -m anonymizer_service -i ' + file +
-                       ' -o upload_file/documents/' + user_folder + '/' + anonymized_file_name + " -w '" + custom_words + "'")
+                       ' -o upload_file/documents/' + user_folder + '/' + anonymized_file_name +
+                       " -w '" + custom_words + "'" + exclude_words_option)
             runShell(command)
 
         with open(file, mode='r') as f:

@@ -16,6 +16,7 @@ class Excluder:
 
     @staticmethod
     def stemmer_clean(entities):
+        print(entities)
         stemmer = GreekStemmer()
         file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'stemmer_exclude_words.txt')
         with open(file_path, 'r') as file_:

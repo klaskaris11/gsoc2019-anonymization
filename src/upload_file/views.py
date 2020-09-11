@@ -197,16 +197,7 @@ def document_preview(request, id):
         anonymized_words = doc_obj.anonymized_words
         updateTextParameter = False
 
-        # GET method text_parameters
-        url = request.get_full_path()
         words = request.GET.getlist('text_param')
-        custom_words = ''
-
-        # GET method user_parameters
-        url = request.get_full_path()
-        user_words = request.GET.getlist('user_dictionary_param')
-        user_custom_words = ''
-
         if words != []:
             # Make sure that we anonymize these words too.
             custom_words = words[0]
@@ -220,6 +211,22 @@ def document_preview(request, id):
                 anonymized_words=anonymized_words)
             updateTextParameter = True
 
+        exclude_words = request.GET.getlist('exclude_text_param')
+        excluded_words = doc_obj.exclude_words
+        if exclude_words != []:
+            # Make sure that we anonymize these words too.
+            exclude_words = exclude_words[0]
+            l = len(exclude_words)
+            exclude_words = exclude_words[1:l-1]
+            exclude_words = exclude_words.replace("\\n", "")
+            excluded_words += exclude_words
+            excluded_words += ','
+            # Update anonymized words by user in database
+            Document.objects.filter(id=id).update(
+                exclude_words=excluded_words)
+            updateTextParameter = True
+
+        user_words = request.GET.getlist('user_dictionary_param')
         user_anonymized_words = ''
         if user_words != []:
             # Make sure that we anonymize these words too.
@@ -234,10 +241,29 @@ def document_preview(request, id):
             user_obj.user_dictionary += user_anonymized_words
             user_obj.save()
 
+        user_exclude_words = request.GET.getlist('user_exclude_dictionary_param')
+        user_excluded_words = ''
+        if user_exclude_words != []:
+            # Make sure that we anonymize these words too.
+            user_exclude_custom_words = user_exclude_words[0]
+            l = len(user_exclude_custom_words)
+            user_exclude_custom_words = user_exclude_custom_words[1:l-1]
+            user_exclude_custom_words = user_exclude_custom_words.replace("\\n", "")
+            user_excluded_words += user_exclude_custom_words
+            user_excluded_words += ','
+            # Update anonymized words by user in database
+            user_obj = User.objects.get(name=user_name)
+            user_obj.user_exclude_dictionary += user_excluded_words
+            user_obj.save()
+
         # Get user anonymized words from db
         user_anonymized_words = User.objects.filter(
             name=str(request.user))[0].user_dictionary + (user_anonymized_words if user_words != [] else '')
         user_folder = str(request.user)
+
+        # Get user excluded words from db
+        user_excluded_words = User.objects.filter(
+            name=str(request.user))[0].user_exclude_dictionary + (user_excluded_words if user_exclude_words != [] else '')
 
         clear_user_dictionary(user_name=user_obj.name)
 
@@ -257,6 +283,7 @@ def document_preview(request, id):
             user_folder=user_folder,
             files_folder=files_folder,
             custom_words=(anonymized_words + ',' + user_anonymized_words),
+            exclude_words=(excluded_words + ',' + user_excluded_words),
             text=text,
             updateTextIfPossible=updateTextParameter,
             rerender_text=rerender_text)
@@ -275,6 +302,12 @@ def document_preview(request, id):
 
 def delete_anonymized_words(request, id):
     Document.objects.filter(id=id).update(anonymized_words='')
+    new_url = '/document/preview/' + str(id) + '?text_param=[""]'
+    return redirect(new_url)
+
+
+def delete_excluded_words(request, id):
+    Document.objects.filter(id=id).update(exclude_words='')
     new_url = '/document/preview/' + str(id) + '?text_param=[""]'
     return redirect(new_url)
 
