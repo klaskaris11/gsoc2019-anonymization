@@ -35,6 +35,7 @@ class Document(models.Model):
     text = models.TextField(default='')
     anonymized_words = models.TextField(default='')
     copy_of_user_dictionary = models.TextField(default='')
+    exclude_words = models.TextField(default='')
 
     def __str__(self):
         return str(self.name)
@@ -47,6 +48,7 @@ class User(models.Model):
     name = models.CharField(
         primary_key=True, max_length=200, default='anonymous')
     user_dictionary = models.TextField(default='')
+    user_exclude_dictionary = models.TextField(default='')
 
     def __str__(self):
         return str(self.name)

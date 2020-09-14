@@ -3,6 +3,7 @@ import getopt
 from os import system as runShell
 from termcolor import colored
 from anonymizer import matcher_patterns
+from anonymizer.excluder import Excluder
 from anonymizer.external_functions import official_json
 from anonymizer.external_functions import fix_pattern
 from anonymizer.external_functions import sort_by_start
@@ -212,6 +213,8 @@ def find_entities(ifile,
     final_text = ''
     index = 0
     previous_e = 0
+
+    entities = Excluder.exclude(entities)
     for element in entities:
         span = element[2]
         s = element[3]

@@ -65,8 +65,12 @@ python3 -m anonymizer_service
                         '--words',
                         help='Custom words search',
                         required=False)
+    parser.add_argument('-x',
+                        '--exclude',
+                        help='Exclude words',
+                        required=False)
     args = parser.parse_args()
-
+    print(args)
     # If given configuration file check that it exists
     #
     # If the service can not track conf.json
@@ -88,9 +92,14 @@ python3 -m anonymizer_service
     if args.words != None:
         words_array_string = args.words
         words_array = words_array_string.split(',')
-
     else:
         words_array = []
+
+    if args.exclude != None:
+        exclude_array_string = args.exclude
+        exclude_array = exclude_array_string.split(',')
+    else:
+        exclude_array = []
 
     if args.method != None:
         try:
@@ -133,14 +142,17 @@ python3 -m anonymizer_service
 
     if (inputfile != None):
         # Pass custom patterns to find_entities()
+        print('here')
         find_entities(ifile=inputfile,
                       ofile=outputfile,
                       method=method,
                       patterns_file=patterns_file,
                       verbose=verbose,
-                      words_array=words_array)
+                      words_array=words_array,
+                      exclude_array=exclude_array)
 
     if args.folder != None:
+        print('there')
         folder = args.folder
         if not os.path.exists(folder):
             raise NameError(f"This folder ({folder}) doesn't exist.")
@@ -154,7 +166,8 @@ python3 -m anonymizer_service
                           method=method,
                           patterns_file=patterns_file,
                           verbose=verbose,
-                          words_array=words_array)
+                          words_array=words_array,
+                          exclude_array=exclude_array)
 
 
 if __name__ == "__main__":

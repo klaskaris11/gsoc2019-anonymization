@@ -4,7 +4,9 @@ import getopt
 from os import system as runShell
 # from spacy.matcher import Matcher
 from termcolor import colored
+
 from anonymizer_service import matcher_patterns
+from anonymizer_service.excluder import Excluder
 from anonymizer_service.external_functions import official_json
 from anonymizer_service.external_functions import fix_pattern
 from anonymizer_service.external_functions import sort_by_start
@@ -117,7 +119,8 @@ def find_entities(ifile,
                   method='delete',
                   patterns_file='patterns.json',
                   verbose=False,
-                  words_array=[]):
+                  words_array=[],
+                  exclude_array=[]):
 
     in_order = True
     # spacy -- init
@@ -217,6 +220,8 @@ def find_entities(ifile,
     final_text = ''
     index = 0
     previous_e = 0
+
+    entities = Excluder.exclude(entities, exclude_array)
     for element in entities:
         span = element[2]
         s = element[3]
