@@ -33,26 +33,26 @@ function goBack() {
 </script>
 <div id='select_preview_button'>
 {% comment %} Selection Buttons {% endcomment %}
-<button type='button' id='option1_button' name='option1' class='btn btn-primary' onclick="select_preview_button_function(1)">Side To Side </button>         
+<button type='button' id='option1_button' name='option1' class='btn btn-sm btn-primary' onclick="select_preview_button_function(1)">Side To Side </button>         
 
-<button type='button' id='option2_button' name='option2' class='btn btn-secondary' onclick="select_preview_button_function(2)">Focus</button>
+<button type='button' id='option2_button' name='option2' class='btn btn-sm btn-secondary' onclick="select_preview_button_function(2)">Focus</button>
 
 {% comment %} Navigation Buttons {% endcomment %}
 
-<button type='button' id='update_text_button' name='update_text_button' class='btn btn-primary' onclick='updateUserDictionary()'>Update User Dictionary </button>
+<button type='button' id='update_text_button' name='update_text_button' class='btn btn-sm btn-primary' onclick='updateUserDictionary()'>Upd User Dictionary </button>
 
-<button type='button' id='update_text_button' name='update_exclude_text_button' class='btn btn-info' onclick='updateExcludeUserDictionary()'>Update Exclude User Dictionary </button>
+<button type='button' id='update_text_button' name='update_exclude_text_button' class='btn btn-sm btn-info' onclick='updateExcludeUserDictionary()'>Upd Exclude User Dictionary </button>
 
-<button type='button' id='update_text_button' name='update_text_button' class='btn btn-success' onclick='updateText()'>Update Text</button>
+<button type='button' id='update_text_button' name='update_text_button' class='btn btn-sm btn-success' onclick='updateText()'>Upd Text</button>
 
-<button type='button' id='anonymize_word_button' name='anonymize_word' class='btn btn-danger' onclick='addWordsToBeAnonymized()'>Anonymize word</button>
+<button type='button' id='anonymize_word_button' name='anonymize_word' class='btn btn-sm btn-danger' onclick='addWordsToBeAnonymized()'>Anonymize word</button>
 
-<button type='button' id='exclude_word_button' name='exclude_word' class='btn btn-info' onclick='addWordsToBeExcluded()'>Exclude word</button>
+<button type='button' id='exclude_word_button' name='exclude_word' class='btn btn-sm btn-info' onclick='addWordsToBeExcluded()'>Exclude word</button>
 
 {% include 'button_delete_words.html' %}
 {% comment %}
-    <button type='button' id='delete_words_button' name='delete_words' class='btn btn-warning' onclick='deleteWordsToBeAnonymized()'>Delete words</button>
-    <button type='button' id='delete_excluded_words_button' name='delete_excluded_words' class='btn btn-warning' onclick='deleteWordsToBeExcluded()'>Delete excluded</button>
+    <button type='button' id='delete_words_button' name='delete_words' class='btn btn-sm btn-warning' onclick='deleteWordsToBeAnonymized()'>Dlt words</button>
+    <button type='button' id='delete_excluded_words_button' name='delete_excluded_words' class='btn btn-sm btn-warning' onclick='deleteWordsToBeExcluded()'>Dlt excluded</button>
 {% endcomment %}
 
 
@@ -63,13 +63,15 @@ function goBack() {
     <div id='option1'>
         <div id='original_document' class='split left'>
 
-            <h3 style='text-align:center'><b>{{document.name}}</b><h3>
+            <h4 style='text-align:center'><b>{{document.name}}</b></h4>
             <br>
+            <span id='original_text'>
             {{document.text|linebreaks}}
+        </span>
         </div>
 
         <div id='anonymized_document' class='split right'>
-            <h3 style='text-align:center'><b>{{document_anonymized.name}}</b><h3>
+            <h4 style='text-align:center'><b>{{document_anonymized.name}}</b></h4>
             <br>
             {% comment %} {% for word in document.text|join:" " %}
                 <span id='tobehidden'>{{word}}</span>
@@ -82,7 +84,7 @@ function goBack() {
     <div id='option2' style='z-index:+5;'>
         
                 <div id='anonymized_document' >
-            <h3 style='text-align:left;'><b>{{document_anonymized.name}}</b><h3>
+            <h4 style='text-align:left;'><b>{{document_anonymized.name}}</b></h4>
             <br>
             <span id='anonymized_text'>{{document_anonymized.text|linebreaks}}</span>
         </div>

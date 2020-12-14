@@ -5,15 +5,19 @@ This is it working!
 {% load crispy_forms_tags %}
 
 <div id='upload_container' class="container dropzone">
-    
-    <h2 style='text-align:center'>Upload your files here<h2>
-    <form method='post' enctype='multipart/form-data'>
-    {% csrf_token %}
-        {% comment %} <input class="box__file" type="file" name="file" id="file" data-multiple-caption="{count} files selected" multiple /> {% endcomment %}
-       <div id="choose_file_button">
-            {{  form|crispy  }}
-        </div>
-        {% comment %} <input type='file' name='file' multiple> {% endcomment %}
-        <button type='submit' class='btn' id="upload_file_button">Upload</button>
-    </form>
+
+
+    <div class="card p-4 border-0" style="background: #e5e5e5">
+        <h3 style='text-align:center'>Upload your files here</h3>
+        <form method='post' enctype='multipart/form-data'>
+            {% csrf_token %}
+            {% comment %} <input class="box__file" type="file" name="file" id="file"
+                data-multiple-caption="{count} files selected" multiple /> {% endcomment %}
+            <div id="choose_file_button" class="">
+                {{ form|crispy }}
+            </div>
+            {% comment %} <input type='file' name='file' multiple> {% endcomment %}
+            <button type='submit' class='btn btn-primary' id="upload_file_button">Upload</button>
+        </form>
+    </div>
 </div>

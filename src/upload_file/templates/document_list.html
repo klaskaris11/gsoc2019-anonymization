@@ -1,33 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2> Documents </h2>
-<table class='table'>
-<thread>
-<tr>
-    <th>Name</th>
-    <th>Preview</th>
-    <th>Download</th>
-    <th>Delete</th>
-</tr>
-</thread> 
+<div class="container-fluid mt-4">
+    <h3> Documents </h3>
+    <table class='table table-hover'>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Preview</th>
+                <th>Download</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
 
-<tbody>
-{% for instance in object_list %}
-<tr>
-    <td>{{instance}}</td>
-    <td>
-        <a href = "/document/preview/{{instance.id}}" class='btn btn-primary btn-sm'>Preview</a>
-    </td>
-    <td>
-        <a href="/document/download/{{instance.id}}" class='btn btn-info btn-sm'>Download</a>
-    </td>
-    <th>
-        <button type='button' class='btn btn-danger' onclick="location.href = '/document/delete/{{instance.id}}'"><span  class='glyphicon glyphicon-trash' ></span></button>
-    </th>
-</tr>
-{% endfor %}
-</tbody>
-</table>
+        <tbody>
+            {% for instance in object_list %}
+            <tr>
+                <td>{{instance}}</td>
+                <td>
+                    <a href="/document/preview/{{instance.id}}" class='btn btn-primary btn-sm'>Preview</a>
+                </td>
+                <td>
+                    <a href="/document/download/{{instance.id}}" class='btn btn-info btn-sm'>Download</a>
+                </td>
+                <th>
+                    <button type='button' class='btn btn-danger'
+                        onclick="location.href = '/document/delete/{{instance.id}}'"><span
+                            class='glyphicon glyphicon-trash'></span></button>
+                </th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% include 'user_dictionary_words.html' %}
 
