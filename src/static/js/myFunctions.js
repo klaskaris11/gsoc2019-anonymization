@@ -113,7 +113,7 @@ function updateExcludeUserDictionary() {
 }
 
 function deleteWordsToBeAnonymized(n) {
-    debugger;
+    // debugger;
     if (n == -1) {
         words_to_be_anonymized = [];
         base_url = window.location.href.split('?')[0]
@@ -137,7 +137,7 @@ function deleteWordsToBeAnonymized(n) {
 
 function deleteWordsToBeExcluded(n) {
     console.log('that.');
-    debugger;
+    // debugger;
     if (n == -1) {
         words_to_be_excluded = [];
         base_url = window.location.href.split('?')[0]

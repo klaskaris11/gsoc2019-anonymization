@@ -11,9 +11,13 @@ class Excluder:
     def exclude(cls, entities, exclude_array):
         exclude_array = [x[1:-1] for x in exclude_array]
         exclude_array = [x for x in exclude_array if x is not '']
+        print("~~~~~~~~~~~~~~~~~exclude_array~~~~~~~~~~~~~~~~~")
         print(exclude_array)
+        print("~~~~~~~~~~~~~~~~~END OF exclude_array~~~~~~~~~~~~~~~~~")
         entities = [x for x in entities if x[1]]
+        print("~~~~~~~~~~~~~~~~~entities~~~~~~~~~~~~~~~~~")
         print(entities)
+        print("~~~~~~~~~~~~~~~~~END OF entities~~~~~~~~~~~~~~~~~")
         # if exclude_array:
         entities = cls.stemmer_clean(entities, exclude_array)
         entities = cls.regex_clean(entities, exclude_array)

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, re_path
 from django.conf import settings
 from .views import (document_preview, document_list, document_delete,
-                    document_download, delete_anonymized_words, delete_user_dictionary, delete_excluded_words)
+                    document_download, delete_anonymized_words, delete_user_dictionary, delete_excluded_words, delete_user_exclusions)
 # from filetransfers.api import serve_file
 
 # document app
@@ -20,6 +20,8 @@ urlpatterns = [
             delete_excluded_words, name='document-delete-excluded-words'),
     re_path(r'user_dictionary/delete/(?P<word>.*)',
             delete_user_dictionary, name='document-delete-user-dictionary-words'),
+    re_path(r'user_exclude_dictionary/delete/(?P<word>.*)',
+            delete_user_exclusions, name='document-delete-user-exclude-dictionary-words'),
 
 
     path('list/', document_list, name='document-list')

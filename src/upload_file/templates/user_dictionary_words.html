@@ -1,24 +1,52 @@
-<div class="container-fluid mt-5">
-    <h3>User Dictionary Words</h3>
-    <table class='table'>
-        <thead>
-            <tr>
-                <th>Word</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
+<div class="container-fluid mt-5 pt-3">
+    <div class="row">
+        <div class="col-md-6 border-right">
+            <h3>User Dictionary Words</h3>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>Word</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
 
-        <tbody>
-            {% for instance in user_dictionary %}
-            <tr>
-                <td>{{instance}}</td>
-                <th>
-                    <button type='button' class='btn btn-danger'
-                        onclick="location.href = '/document/user_dictionary/delete/{{instance}}'"><span
-                            class='glyphicon glyphicon-trash'></span></button>
-                </th>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                <tbody>
+                    {% for instance in user_dictionary %}
+                    <tr>
+                        <td>{{instance}}</td>
+                        <th>
+                            <button type='button' class='btn btn-danger'
+                                onclick="location.href = '/document/user_dictionary/delete/{{instance}}'"><span
+                                    class='glyphicon glyphicon-trash'></span></button>
+                        </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h3>User Exclusion Words</h3>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>Word</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for instance in user_exclude_dictionary %}
+                    <tr>
+                        <td>{{instance}}</td>
+                        <th>
+                            <button type='button' class='btn btn-danger'
+                                onclick="location.href = '/document/user_exclude_dictionary/delete/{{instance}}'"><span
+                                    class='glyphicon glyphicon-trash'></span></button>
+                        </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

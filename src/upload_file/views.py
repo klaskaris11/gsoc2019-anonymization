@@ -115,6 +115,7 @@ def document_list(request):
     else:
         user_obj = user_obj[0]
     words = user_obj.user_dictionary
+    excl_words = user_obj.user_exclude_dictionary
     user_words = []
     new_dict = ''
     for word in words.split(','):
@@ -126,11 +127,23 @@ def document_list(request):
     user_obj.user_dictionary = new_dict
     user_obj.save()
 
+    user_excl_words = []
+    new_excl_dict = ''
+    for user_excl_word in excl_words.split(','):
+        if user_excl_word in ['', "'", '"', "", " ", "", None] or len(user_excl_word.replace('"', '')) == 0:
+            continue
+        if user_excl_word not in user_excl_words:
+            user_excl_words.append(user_excl_word)
+            new_excl_dict += user_excl_word + ','
+    user_obj.user_exclude_dictionary = new_excl_dict
+    user_obj.save()
+
     context = {
         'filenames': files,
         'files_path': os.path.join(script_dir, "documents/" + user_folder),
         'object_list': queryset,
-        'user_dictionary': user_words
+        'user_dictionary': user_words,
+        'user_exclude_dictionary' : user_excl_words
     }
 
     return render(request, 'document_list.html', context)
@@ -147,6 +160,16 @@ def delete_user_dictionary(request, word):
     new_dict = user_obj.user_dictionary.replace(word + ',', '')
     new_dict = new_dict.replace(word, '')
     user_obj.user_dictionary = new_dict
+    user_obj.save()
+    return redirect('/document/list/')
+
+
+def delete_user_exclusions(request, word):
+    word = word.strip().replace('"', '')
+    user_obj = User.objects.get(name=str(request.user))
+    new_exl = user_obj.user_exclude_dictionary.replace(word + ',', '')
+    new_exl = new_exl.replace(word, '')
+    user_obj.user_exclude_dictionary = new_exl
     user_obj.save()
     return redirect('/document/list/')
 
@@ -241,14 +264,16 @@ def document_preview(request, id):
             user_obj.user_dictionary += user_anonymized_words
             user_obj.save()
 
-        user_exclude_words = request.GET.getlist('user_exclude_dictionary_param')
+        user_exclude_words = request.GET.getlist(
+            'user_exclude_dictionary_param')
         user_excluded_words = ''
         if user_exclude_words != []:
             # Make sure that we anonymize these words too.
             user_exclude_custom_words = user_exclude_words[0]
             l = len(user_exclude_custom_words)
             user_exclude_custom_words = user_exclude_custom_words[1:l-1]
-            user_exclude_custom_words = user_exclude_custom_words.replace("\\n", "")
+            user_exclude_custom_words = user_exclude_custom_words.replace(
+                "\\n", "")
             user_excluded_words += user_exclude_custom_words
             user_excluded_words += ','
             # Update anonymized words by user in database
@@ -270,14 +295,16 @@ def document_preview(request, id):
         # Check for possible updates
         # If the user dictionary version is not up to date
         # make sure to update it and re-render the text
-        if doc_obj.copy_of_user_dictionary != user_obj.user_dictionary:
+        if doc_obj.copy_of_user_dictionary != user_obj.user_dictionary or doc_obj.copy_of_user_user_exclude_dictionary != user_obj.user_exclude_dictionary:
             # Update the copy user dictionary
             doc_obj.copy_of_user_dictionary = user_obj.user_dictionary
+            doc_obj.copy_of_user_user_exclude_dictionary = user_obj.user_exclude_dictionary
             doc_obj.save()
             # Make sure that the text is re rendered
             rerender_text = True
         else:
             rerender_text = False
+
         [document, document_anonymized] = anonymize_file(
             id=id,
             user_folder=user_folder,
