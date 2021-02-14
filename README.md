@@ -39,6 +39,15 @@ The libreoffice extension uses the following libraries: [uno](https://wiki.openo
 
 For more information you can visit [future work](https://github.com/eellak/gsoc2019-anonymization/wiki/Future-Work) in wiki pages.
 
+## How to install
+1) git clone https://github.com/klaskaris11/gsoc2019-anonymization.git
+2) cd gsoc2019-anonymization/
+3) Create venv (virtualenv venv)
+4) source venv/bin/activate
+5) pip install -r requirements.txt
+6) python manage.py migrate
+7) python manage.py runserver
+
 ## Final Report Gist
 You can find the final report [here](https://gist.github.com/DimitrisKatsiros/cf6ad8e338a545a74306e0a52d2bfe26).
 
