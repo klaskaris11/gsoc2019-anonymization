@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container my-3 text-center">
-    <h1>Google Summer Of Code 2019 </h1>
+<div class="container my-3">
+    <h1 class="text-center">Google Summer Of Code 2019 </h1>
 
-    <h3>Anonymisation Through Data Encryption of Sensitive Data in ODT and Text Files in Greek Language</h3>
+    <h3 class="text-center">Anonymisation Through Data Encryption of Sensitive Data in ODT and Text Files in Greek Language</h3>
     <br>
 
     <h2> Problem Statement </h2>
@@ -31,6 +31,16 @@
         Check <a href='https://github.com/eellak/gsoc2019-anonymization/wiki'>wiki</a> pages.
     </p>
     <h2>Project</h2>
-    Check the whole project <a href='https://github.com/eellak/gsoc2019-anonymization'>here</a>.
+    <p>Check the whole project <a href='https://github.com/eellak/gsoc2019-anonymization'>here</a>.</p>
+    <h2>How to install</h2>
+    <ul>
+        <li>git clone https://github.com/klaskaris11/gsoc2019-anonymization.git</li>
+        <li>cd gsoc2019-anonymization/</li>
+        <li>Create venv (virtualenv venv)</li>
+        <li>source venv/bin/activate</li>
+        <li>pip install -r requirements.txt</li>
+        <li>python manage.py migrate</li>
+        <li>python manage.py runserver</li>
+    </ul>
 </div>
 {% endblock content %}
